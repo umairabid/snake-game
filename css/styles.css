@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#snake-board {
+  width: 800px;
+  height: 800px;
+  border: 1px solid #000;
+  margin: 20px auto;
+}
+
+.grid-cell {
+  border: 1px solid #fff;
+}
+
+.grid-cell.active {
+  background-color: #000;
+}
+
+.grid-cell.food {
+  background-color: blue;
+}
