@@ -2,15 +2,19 @@
   <head>
     <title>Snake Game</title>
     <link rel="icon" href="data:,">
-    <script src="/js/scripts.js"></script>
-    <link href="/css/styles.css" rel="stylesheet" type="text/css" />
+
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div class="game-container">
       <span class="score-container">
-        Score: <span id="current-score">0</span>
+        Score: <span style="color: black" id="current-score">0</span>
       </span>
       <div id="snake-board"></div>
+      <div style="display: none" id="gameover-overlay">
+        <button id="play-again-btn">Play Again</button>
+      </div>
     </div>
+    <script src="js/main.js"></script>
   </body>
 </html>

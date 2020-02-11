@@ -1,9 +1,35 @@
+/**
+* Notes to reviewer
+* - ES5 is used mainly because of browser compatibilty
+* - Any use of library was essentially ignore to show understaning of low level javascript constructs
+* - The lag while reversing and initializing game can possibly be removed by not using actual DOM grid but virtual grid
+    will come back to this if get some time left from second challenge
+**/
+
 window.onload = function() {
-  const game = new SnakeGame('snake-board');
-  var scoreElem = document.getElementById('current-score')
+  var game = new SnakeGame('snake-board');
+  var scoreElem = document.getElementById('current-score');
+  var previousScore = 0;
+  var overlay = document.getElementById('gameover-overlay');
+  var playAgainBtn = document.getElementById('play-again-btn');
+
   game.on('onScoreUpdate', function(score) {
-    console.log(score);
     scoreElem.innerHTML = score;
+    if(score > previousScore) {
+      scoreElem.style.color = "green";
+    }
+  })
+
+  game.on('onGameEnded', function(score) {
+    previousScore = score;
+    overlay.style.display = "flex";
+  })
+
+  playAgainBtn.addEventListener('click', function() {
+    scoreElem.innerHTML = 0;
+    scoreElem.style.color = "black";
+    overlay.style.display = "none";
+    game.restart();
   })
 }
 
@@ -51,6 +77,13 @@ SnakeGame.prototype = {
   bindEvents: function() {
     window.addEventListener('keydown', this.onKeyPress);
     this.moveInterval = setInterval(this.onMove, 100);
+  },
+
+  restart: function() {
+    this.board().innerHTML = "";
+    this.board().style.width = "800px";
+    this.board().style.height = "800px";
+    this.initialize();
   },
 
   produceFood: function() {
@@ -101,6 +134,8 @@ SnakeGame.prototype = {
 
   resizeBoard: function(newPoint) {
     clearInterval(this.moveInterval);
+    window.removeEventListener('keydown', this.onKeyPress);
+    clearTimeout(this.foodTimeout);
     var newRowsNum = Math.floor((this.board().clientWidth - 133) / this.cellSize());
     var newColsNum = Math.floor((this.board().clientHeight - 133) / this.cellSize());
     var rowDifference = this.rowsNum() - newRowsNum;
@@ -153,7 +188,7 @@ SnakeGame.prototype = {
     this.board().style.height = this.board().offsetHeight - 133 + 'px';
     // this.generateGrid();
 
-    clearTimeout(this.foodTimeout);
+    window.addEventListener('keydown', this.onKeyPress);
     this.produceFood();
     this.paintPath();
     this.onMove();
@@ -189,7 +224,7 @@ SnakeGame.prototype = {
     clearInterval(this.moveInterval);
     clearTimeout(this.foodTimeout);
     window.removeEventListener('keydown', this.onKeyPress);
-    console.log('game ended');
+    this.events().onGameEnded.forEach(cb => cb(this.score));
   },
 
   removeLastPoint: function() {
@@ -225,6 +260,7 @@ SnakeGame.prototype = {
   },
 
   initializePath: function() {
+    this.path().length = 0;
     var initialLength = 5;
     var midRow = Math.floor(this.rowsNum() / 2);
     var midCol = Math.floor(this.colsNum() / 2);
