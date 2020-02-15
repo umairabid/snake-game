@@ -91,14 +91,12 @@ SnakeGame.prototype = {
     var freeRowCol = this.getRandomFreeRowCol();
     var prevFoodCell = this.getCell(this.foodPos());
     if(prevFoodCell) {
-      prevFoodCell.className = prevFoodCell.className.split(' ').filter(c => c !== 'food').join(' ');
+      prevFoodCell.classList.remove('food');
     }
     this.foodPos().row = freeRowCol.row;
     this.foodPos().col = freeRowCol.col;
     var nextFoodCell = this.getCell(this.foodPos());
-    var classNames = nextFoodCell.className.split(' ');
-    classNames.push('food');
-    nextFoodCell.className = classNames.join(' ');
+    nextFoodCell.classList.add('food');
     this.foodTimeout = setTimeout(this.produceFood, timeout * 1000);
   },
 
@@ -118,7 +116,7 @@ SnakeGame.prototype = {
       return;
     }
     if(this.collidedWithBoundry(newPoint)) {
-      this.resizeBoard(newPoint);
+      this.resizeBoard();
       return;
     }
     this.path().unshift(newPoint);
@@ -132,7 +130,7 @@ SnakeGame.prototype = {
     this.paintPath();
   },
 
-  resizeBoard: function(newPoint) {
+  resizeBoard: function() {
     clearInterval(this.moveInterval);
     window.removeEventListener('keydown', this.onKeyPress);
     clearTimeout(this.foodTimeout);
@@ -143,8 +141,6 @@ SnakeGame.prototype = {
     var shouldNormalizeCols = false;
     var shouldNormalizeRows = false;
     var shouldEndGame = false;
-
-    this.reverseDirection(newPoint);
 
     for(var i = 0; i < this.path().length; i++) {
       var point = this.path()[i];
@@ -164,7 +160,7 @@ SnakeGame.prototype = {
       var point = this.path()[i];
       if(shouldNormalizeCols || shouldNormalizeCols) {
         var cell = this.getCell(point);
-        cell.className = cell.className.split(' ').filter(c => c !== 'active').join(' ');
+        cell.classList.add('active');
       }
       if(shouldNormalizeRows) point.row = point.row - rowDifference;
       if(shouldNormalizeCols) point.col = point.col - colDifference;
@@ -187,7 +183,8 @@ SnakeGame.prototype = {
     this.board().style.width = this.board().offsetWidth - 133 + 'px';
     this.board().style.height = this.board().offsetHeight - 133 + 'px';
     // this.generateGrid();
-
+    var newPoint = this.getNextPathPoint();
+    this.reverseDirection(newPoint);
     window.addEventListener('keydown', this.onKeyPress);
     this.produceFood();
     this.paintPath();
@@ -230,8 +227,7 @@ SnakeGame.prototype = {
   removeLastPoint: function() {
     var lastPoint = this.path().pop();
     var lastCell = this.getCell(lastPoint);
-    var classNames = lastCell.className.split(' ').filter(c => c !== 'active');
-    lastCell.className = classNames.join(' ');
+    lastCell.classList.remove('active');
   },
 
   getNextPathPoint: function() {
@@ -253,9 +249,7 @@ SnakeGame.prototype = {
   paintPath: function() {
     this.path().forEach( p => {
       var cell = this.getCell(p);
-      var classNames = cell.className.split(' ');
-      if(classNames.indexOf('active') < 0) classNames.push('active');
-      cell.className = classNames.join(' ');
+      cell.classList.add('active')
     })
   },
 

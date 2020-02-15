@@ -1,0 +1,151 @@
+
+body {
+  margin: 0;
+  font-size: 14px;
+}
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+textarea, input {
+  box-shadow: inset 0 0 10px #eee;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+button:active {
+   box-shadow: inset 1px 1px 10px #666;
+}
+
+.app-container {
+  height: calc(100% - 40px);
+  width: 400px;
+  margin: 16px auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-container {
+  height: 200px;
+  padding: 12px;
+}
+
+#add-container {
+  border-bottom: 1px solid #ccc;
+  height: 200px;
+}
+
+#list-container {
+  overflow: auto;
+  height: calc(100% - 200px);
+}
+
+.todo-form-controls {
+  display: flex;
+  margin-top: 12px;
+  justify-content: space-between;
+}
+
+.remind-container input {
+  width: 70px;
+}
+
+textarea {
+  width: 100%;
+  height: 75px;
+  overflow: auto;
+}
+
+.btn-group button {
+  box-shadow: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9em;
+  padding: 4px 12px;
+}
+
+.btn-group button.low {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.btn-group button.low.selected {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-group button.medium {
+  border-color: #17a2b8;
+  color: #17a2b8;
+}
+
+.btn-group button.medium.selected {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+.btn-group button.high {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.btn-group button.high.selected {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.save {
+  display: block;
+  width: 100%;
+  background-color: #17a2b8;
+  color: #fff;
+  box-shadow: none;
+  border-radius: 4px;
+  border: 1px solid #17a2b8;
+  margin-top: 20px;
+  font-size: 1.1em;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.todo-item {
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.todo-item.completed {
+  text-decoration: line-through;
+  color: #999;
+  font-style: italic;
+}
+
+.todo-item .todo-item-content .note {
+  display: flex;
+  align-items: center;
+}
+
+.todo-item .todo-item-content .note input {
+  margin-right: 12px;
+}
+
+.todo-item .todo-item-content .actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.todo-item.low {
+  background-color: #e8faec;
+}
+
+.todo-item.medium {
+  background-color: #e6f9fc;
+}
+
+.todo-item.high {
+  background-color: #fcedee;
+}

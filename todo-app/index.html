@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Todo App</title>
+    <link rel="icon" href="data:,">
+
+    <link href="main.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <div id="add-container" class="form-container">
+        <textarea name="name"></textarea>
+        <div class="todo-form-controls">
+          <div class="remind-container">
+            Complete in <input min="1" type="number" placeholder="sec(s)" />
+          </div>
+          <div class="btn-group">
+            <button value="low" class="low selected">Low</button>
+            <button value="medium" class="medium">Medium</button>
+            <button value="high" class="high">High</button>
+          </div>
+        </div>
+        <button class="save">Save Todo</button>
+      </div>
+      <div id="list-container">
+
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
